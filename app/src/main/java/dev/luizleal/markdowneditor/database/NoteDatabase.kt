@@ -8,7 +8,7 @@ import dev.luizleal.markdowneditor.constants.DatabaseConstants
 import dev.luizleal.markdowneditor.dao.NoteDao
 import dev.luizleal.markdowneditor.model.Note
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract class NoteDatabase: RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
