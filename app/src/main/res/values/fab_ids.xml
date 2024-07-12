@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_import_from_file" type="id"/>
+    <item name="fab_import_from_link" type="id"/>
+    <item name="fab_write_new" type="id"/>
+</resources>
