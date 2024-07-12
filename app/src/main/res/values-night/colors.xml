@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bgColor">#f4f2f7</color>
+    <color name="foreground">#ffffff</color>
+    <color name="onForeground">#f9f9f9</color>
+    <color name="textColorPrimary">#27242c</color>
+    <color name="textColorSecondary">#8a8a8e</color>
+</resources>
