@@ -3,7 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#288DD6</color>
+    <color name="primary">#2871D6</color>
+    <color name="lightPrimary">#3CA2EB</color>
     <color name="bgColor">#f4f2f7</color>
     <color name="foreground">#ffffff</color>
     <color name="onForeground">#f9f9f9</color>
