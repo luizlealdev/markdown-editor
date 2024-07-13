@@ -1,11 +1,13 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.databinding.FragmentHomeBinding
@@ -28,6 +30,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setSpeedViewItem(getString(R.string.import_from_file), R.id.fab_import_from_file, R.drawable.ic_upload_file)
         setSpeedViewItem(getString(R.string.import_from_url), R.id.fab_import_from_link, R.drawable.ic_add_link)
         setSpeedViewItem(getString(R.string.new_markdown), R.id.fab_write_new, R.drawable.ic_text_increase)
+
+        setupSpeedViewItemClicked()
     }
 
     private fun setSpeedViewItem(label: String, idRef: Int, iconRef: Int) {
@@ -38,5 +42,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 .setLabel(label)
                 .create()
         )
+    }
+
+    private fun setupSpeedViewItemClicked() {
+        binding.speedviewNew.setOnActionSelectedListener { actionItem ->
+            when (actionItem.id) {
+                R.id.fab_write_new -> {
+                    this.findNavController().navigate(R.id.action_homeFragment_to_editorFragment)
+                    true
+                }
+                else -> false
+//                R.id.fab_import_from_link -> {
+//
+//                }
+//                R.id.fab_import_from_file -> {
+//
+//                }
+            }
+        }
     }
 }

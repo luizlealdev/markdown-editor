@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/editorFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_editorFragment"
-            app:destination="@id/editorFragment" />
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editorFragment"
-        android:name="dev.luizleal.markdowneditor.ui.fragments.EditorFragment"
+        android:id="@+id/editFragment"
+        android:name="dev.luizleal.markdowneditor.ui.fragments.EditFragment"
         android:label="fragment_editor"
-        tools:layout="@layout/fragment_editor" >
+        tools:layout="@layout/fragment_edit" >
         <action
             android:id="@+id/action_editorFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
