@@ -64,6 +64,10 @@ dependencies {
 
     //Markwon
     implementation(libs.core)
+    implementation(libs.markwon.image)
+    implementation(libs.markwon.linkify)
+    implementation(libs.markwon.ext.tasklist)
+    implementation(libs.markwon.ext.tables)
 
     //SpeedDial
     implementation(libs.speed.dial)
