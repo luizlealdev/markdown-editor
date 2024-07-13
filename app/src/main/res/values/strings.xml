@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Markdown Editor</string>
+    <string name="new_note_button">New note</string>
+    <string name="fab_new">New</string>
+    <string name="import_file">Import file</string>
+    <string name="write_a_new_note">Write a new note</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
