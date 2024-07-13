@@ -68,7 +68,4 @@ dependencies {
 
     //Kotlin coroutines
     implementation(libs.kotlinx.coroutines.android)
-
-    //Viewpager
-    implementation(libs.androidx.viewpager2)
 }
