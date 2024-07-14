@@ -1,13 +1,16 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
@@ -16,6 +19,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.databinding.FragmentEditBinding
+import dev.luizleal.markdowneditor.model.Note
+import dev.luizleal.markdowneditor.ui.view.MainActivity
+import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonSpansFactory
@@ -25,10 +31,13 @@ import io.noties.markwon.ext.tasklist.TaskListPlugin
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
 import org.commonmark.node.Paragraph
+import java.util.Calendar
 
 class EditFragment : Fragment(R.layout.fragment_edit) {
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,16 +48,45 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = (activity as MainActivity).viewModel
 
         setupMenu()
+        setTextInMarkdownEditText()
+        setEditTextOccupationScreen()
+    }
+
+    override fun onStart() {
+        super.onStart()
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setTextInMarkdownEditText() {
+        val markdown = """ 
+            # Markdown title
+            
+            **text bold**, _text italic_ 
+            
+            ## This is a list
+            - item 1
+            - item 2
+            - item 3
+            
+            ## This is a code block
+            ```kotlin
+            fun main() {
+                println("Hello World!")
+            }
+            """.trimIndent()
+
+        binding.editNote.setText(markdown)
     }
 
     private fun setupMenu() {
@@ -94,6 +132,11 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
+    private fun setEditTextOccupationScreen() {
+        val windowHeight = Resources.getSystem().displayMetrics.heightPixels
+        binding.editNote.minHeight = windowHeight - 200
+    }
+
     private fun setEditorToggleMode(isEditing: Boolean) {
         val editNote = binding.editNote
         val textMarkdown = binding.textMarkdown
@@ -101,11 +144,11 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         if (isEditing) {
 
             editNote.visibility = View.VISIBLE
-            textMarkdown.visibility = View.INVISIBLE
+            textMarkdown.visibility = View.GONE
 
         } else {
 
-            editNote.visibility = View.INVISIBLE
+            editNote.visibility = View.GONE
             textMarkdown.visibility = View.VISIBLE
 
         }
@@ -143,6 +186,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 0 -> {
+                    saveNote()
                     true
                 }
 
@@ -150,5 +194,14 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             }
         }
         popupMenu.show()
+    }
+
+    private fun saveNote() {
+        val currentDate = Calendar.getInstance()
+        viewModel.insertNote(Note(
+            text = binding.editNote.text.toString(),
+            lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
+            lastUpdateMonth = currentDate.get(Calendar.MONTH + 1)
+        ))
     }
 }
