@@ -24,6 +24,7 @@
         app:sdMainFabOpenedBackgroundColor="@color/primary"
         app:sdMainFabClosedBackgroundColor="@color/primary"
         android:layout_height="wrap_content"
+        app:sdMainFabAnimationRotateAngle="90"
         app:sdMainFabClosedIconColor="@color/white"
         app:sdMainFabClosedSrc="@drawable/ic_add"
         app:sdMainFabOpenedSrc="@drawable/ic_close" />
