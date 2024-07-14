@@ -10,4 +10,7 @@
     <string name="editor">Editor</string>
     <string name="save">Save</string>
     <string name="more">More</string>
+    <string name="url">URL</string>
+    <string name="positive_button">OK</string>
+    <string name="negative_button">Cancel</string>
 </resources>
