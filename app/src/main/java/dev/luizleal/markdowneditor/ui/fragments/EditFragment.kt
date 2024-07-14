@@ -1,12 +1,15 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
 import android.os.Bundle
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -15,11 +18,13 @@ import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.databinding.FragmentEditBinding
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonSpansFactory
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.ext.tasklist.TaskListPlugin
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
+import org.commonmark.node.Paragraph
 
 class EditFragment : Fragment(R.layout.fragment_edit) {
     private var _binding: FragmentEditBinding? = null
@@ -32,7 +37,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         // Inflate the layout for this fragment
         _binding = FragmentEditBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onStart() {
@@ -76,6 +80,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                         true
                     }
 
+                    getString(R.string.more) -> {
+                        showMoreActionsPopupMenu(
+                            requireActivity().findViewById(R.id.more_actions)
+                        )
+                        true
+                    }
+
                     else -> false
                 }
             }
@@ -108,13 +119,36 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             .usePlugin(object : AbstractMarkwonPlugin() {
                 override fun configureTheme(builder: MarkwonTheme.Builder) {
                     builder.bulletWidth(9)
+                    builder.blockQuoteColor(ContextCompat.getColor(requireContext(), R.color.textColorSecondary))
+                }
+                override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
+                    builder.setFactory(Paragraph::class.java) { _, _ ->
+                        ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.textMarkdownBaseColor))
+                    }
                 }
             })
             .usePlugin(TablePlugin.create(requireContext()))
             .usePlugin(TaskListPlugin.create(requireContext()))
             .build()
 
+
         val markdown = binding.editNote.text.toString().trimIndent()
         markwon.setMarkdown(binding.textMarkdown, markdown)
+    }
+
+    private fun showMoreActionsPopupMenu(parent: View) {
+        val popupMenu = PopupMenu(requireContext(), parent)
+        popupMenu.menuInflater.inflate(R.menu.more_action_items, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                0 -> {
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popupMenu.show()
     }
 }

@@ -8,4 +8,6 @@
     <string name="write_the_markdown_here">Write the Markdown here</string>
     <string name="preview">Preview</string>
     <string name="editor">Editor</string>
+    <string name="save">Save</string>
+    <string name="more">More</string>
 </resources>

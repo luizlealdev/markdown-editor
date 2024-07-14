@@ -39,7 +39,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="Você está no preview agora"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
                 android:visibility="invisible"

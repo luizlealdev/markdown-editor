@@ -5,6 +5,10 @@
         android:id="@+id/preview_mode"
         android:icon="@drawable/ic_note"
         android:title="@string/preview"
-        app:showAsAction="ifRoom"/>
-    
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/more_actions"
+        android:icon="@drawable/ic_more"
+        android:title="@string/more"
+        app:showAsAction="ifRoom|withText" />
 </menu>

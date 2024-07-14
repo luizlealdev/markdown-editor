@@ -9,5 +9,6 @@
     <color name="foreground">#ffffff</color>
     <color name="onForeground">#f9f9f9</color>
     <color name="textColorPrimary">#27242c</color>
+    <color name="textMarkdownBaseColor">#3B3940</color>
     <color name="textColorSecondary">#8a8a8e</color>
 </resources>
