@@ -1,9 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MarkdownEditor" parent="Theme.MaterialComponents.DayNight">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MarkdownEditor" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@color/lightPrimary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/lightPrimary</item>
+        <item name="colorSecondaryVariant">@color/lightPrimary</item>
+        <item name="colorOnSecondary">@color/lightPrimary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/onForeground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="actionBarStyle">@style/Theme.Actionbar</item>
     </style>
 
     <style name="Theme.MarkdownEditor" parent="Base.Theme.MarkdownEditor" />
+
+    <style name="Theme.Actionbar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/foreground</item>
+    </style>
 </resources>
