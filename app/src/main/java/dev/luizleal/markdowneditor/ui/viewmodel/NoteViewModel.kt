@@ -2,6 +2,7 @@ package dev.luizleal.markdowneditor.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.repository.NoteRepository
@@ -20,5 +21,14 @@ class NoteViewModel(private val repository: NoteRepository): ViewModel() {
 
     fun deleteNote(note: Note) = viewModelScope.launch {
         repository.deleteNote(note)
+    }
+
+    class NoteViewModelFactory(private val repository: NoteRepository): ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
+                return NoteViewModel(repository) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel Class")
+        }
     }
 }

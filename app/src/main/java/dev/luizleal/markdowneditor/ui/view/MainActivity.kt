@@ -1,14 +1,18 @@
 package dev.luizleal.markdowneditor.ui.view
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.leinardi.android.speeddial.SpeedDialActionItem
-import dev.luizleal.markdowneditor.R
+import dev.luizleal.markdowneditor.MyApplication
 import dev.luizleal.markdowneditor.databinding.ActivityMainBinding
+import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    val viewModel: NoteViewModel by viewModels {
+        NoteViewModel.NoteViewModelFactory((application as MyApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
