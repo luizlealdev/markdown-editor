@@ -9,5 +9,6 @@ import dev.luizleal.markdowneditor.constants.DatabaseConstants
 data class Note(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
     val text: String,
-    @ColumnInfo(name = "last_update") val lastUpdate: String
+    @ColumnInfo(name = "last_update_day") val lastUpdateDay: Int,
+    @ColumnInfo(name = "last_update_month") val lastUpdateMonth: Int
 )
