@@ -3,14 +3,13 @@ package dev.luizleal.markdowneditor.ui.fragments
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
-import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
@@ -39,6 +38,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private lateinit var viewModel: NoteViewModel
 
+    private lateinit var markwon: Markwon
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +62,34 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     override fun onStart() {
         super.onStart()
 
+        markwon = Markwon.builder(requireContext())
+            .usePlugin(ImagesPlugin.create())
+            .usePlugin(LinkifyPlugin.create())
+            .usePlugin(object : AbstractMarkwonPlugin() {
+                override fun configureTheme(builder: MarkwonTheme.Builder) {
+                    builder.bulletWidth(9)
+                    builder.blockQuoteColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.textColorSecondary
+                        )
+                    )
+                }
+
+                override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
+                    builder.setFactory(Paragraph::class.java) { _, _ ->
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.textMarkdownBaseColor
+                            )
+                        )
+                    }
+                }
+            })
+            .usePlugin(TablePlugin.create(requireContext()))
+            .usePlugin(TaskListPlugin.create(requireContext()))
+            .build()
     }
 
     override fun onDestroy() {
@@ -84,6 +113,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             fun main() {
                 println("Hello World!")
             }
+            ```
             """.trimIndent()
 
         binding.editNote.setText(markdown)
@@ -134,7 +164,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private fun setEditTextOccupationScreen() {
         val windowHeight = Resources.getSystem().displayMetrics.heightPixels
-        binding.editNote.minHeight = windowHeight - 200
+        binding.editNote.minHeight = windowHeight - android.R.attr.actionBarSize
     }
 
     private fun setEditorToggleMode(isEditing: Boolean) {
@@ -162,11 +192,22 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             .usePlugin(object : AbstractMarkwonPlugin() {
                 override fun configureTheme(builder: MarkwonTheme.Builder) {
                     builder.bulletWidth(9)
-                    builder.blockQuoteColor(ContextCompat.getColor(requireContext(), R.color.textColorSecondary))
+                    builder.blockQuoteColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.textColorSecondary
+                        )
+                    )
                 }
+
                 override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
                     builder.setFactory(Paragraph::class.java) { _, _ ->
-                        ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.textMarkdownBaseColor))
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.textMarkdownBaseColor
+                            )
+                        )
                     }
                 }
             })
@@ -185,23 +226,28 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                0 -> {
-                    saveNote()
+                R.id.save -> {
+                    saveNote(binding.editNote.text.toString())
                     true
                 }
 
-                else -> false
+                else -> {
+                    false
+                }
             }
         }
         popupMenu.show()
     }
 
-    private fun saveNote() {
+    private fun saveNote(text: String) {
         val currentDate = Calendar.getInstance()
-        viewModel.insertNote(Note(
-            text = binding.editNote.text.toString(),
-            lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
-            lastUpdateMonth = currentDate.get(Calendar.MONTH + 1)
-        ))
+
+        viewModel.insertNote(
+            Note(
+                text = text,
+                lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
+                lastUpdateMonth = currentDate.get(Calendar.MONTH)
+            )
+        )
     }
 }
