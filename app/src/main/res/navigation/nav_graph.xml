@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="dev.luizleal.markdowneditor.ui.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_editorFragment"
             app:destination="@id/editFragment" />
@@ -18,7 +18,15 @@
         android:id="@+id/editFragment"
         android:name="dev.luizleal.markdowneditor.ui.fragments.EditFragment"
         android:label="fragment_editor"
-        tools:layout="@layout/fragment_edit" >
+        tools:layout="@layout/fragment_edit">
+        <argument
+            android:name="note"
+            app:argType="dev.luizleal.markdowneditor.model.Note"
+            app:nullable="true" />
+        <argument
+            android:name="is_editing"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_editorFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
