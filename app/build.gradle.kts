@@ -62,6 +62,9 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
+    //OkHttp
+    implementation(libs.okhttp)
+
     //Markwon
     implementation(libs.core)
     implementation(libs.markwon.image)
