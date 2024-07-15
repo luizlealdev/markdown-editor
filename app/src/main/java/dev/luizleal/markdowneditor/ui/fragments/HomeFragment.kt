@@ -1,23 +1,36 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
+import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.databinding.FragmentHomeBinding
+import dev.luizleal.markdowneditor.model.Note
+import dev.luizleal.markdowneditor.ui.adapter.NoteListAdapter
 import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
+import dev.luizleal.markdowneditor.utils.StringUtils.Companion.isAValidUrl
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: NoteViewModel
+    private val noteListAdapter = NoteListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = (activity as MainActivity).viewModel
+        setupRecyclerView()
     }
 
     override fun onStart() {
@@ -54,6 +68,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
 
         setupSpeedViewItemClicked()
+
+        viewModel.allNotes.observe(this) { items ->
+            noteListAdapter.setItems(items)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerviewNotes.apply {
+            adapter = noteListAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
     }
 
     private fun setSpeedViewItem(label: String, idRef: Int, iconRef: Int) {
@@ -75,7 +104,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.speedviewNew.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.fab_write_new -> {
-                    this.findNavController().navigate(R.id.action_homeFragment_to_editorFragment)
+                    val action = HomeFragmentDirections.actionHomeFragmentToEditorFragment(null)
+                    this.findNavController().navigate(action)
+
                     true
                 }
 
@@ -92,15 +123,79 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun showAlertDialogForImport() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_import_from_url, null)
+        val textfield = dialogView.findViewById<TextInputEditText>(R.id.textfield_url)
+
         MaterialAlertDialogBuilder(requireContext())
-            .setView(R.layout.dialog_import_from_url)
+            .setView(dialogView)
             .setPositiveButton(getString(R.string.positive_button)) { _, _ ->
 
+                fetchDataFromUrl(textfield.text.toString().trim())
             }
             .setNegativeButton(getString(R.string.negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create().show()
 
+    }
+
+    private fun fetchDataFromUrl(url: String) {
+        if (url.isAValidUrl()) {
+            val webClient = OkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            webClient.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.import_from_url_error),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {
+                        if (response.isSuccessful) {
+
+                            val rawData = response.body?.string()
+                            saveNote(rawData ?: "")
+
+                        } else {
+
+                            Snackbar.make(
+                                binding.root,
+                                getString(R.string.import_from_url_error_serverless),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
+                }
+
+            })
+        } else {
+
+            Snackbar.make(
+                binding.root,
+                getString(R.string.invalid_url),
+                Snackbar.LENGTH_SHORT
+            ).show()
+
+        }
+    }
+
+    private fun saveNote(text: String) {
+        val currentDate = Calendar.getInstance()
+
+        viewModel.insertNote(
+            Note(
+                id = null,
+                text = text,
+                lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
+                lastUpdateMonth = currentDate.get(Calendar.MONTH),
+            )
+        )
     }
 }
