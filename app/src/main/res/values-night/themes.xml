@@ -10,8 +10,10 @@
         <item name="colorSecondaryVariant">@color/lightPrimary</item>
         <item name="colorOnSecondary">@color/lightPrimary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/onForeground</item>
+        <item name="android:statusBarColor">@color/foreground</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="actionBarStyle">@style/Theme.Actionbar</item>
+
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
 </resources>

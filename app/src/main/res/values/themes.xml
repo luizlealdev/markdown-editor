@@ -9,15 +9,22 @@
         <item name="colorSecondary">@color/lightPrimary</item>
         <item name="colorSecondaryVariant">@color/lightPrimary</item>
         <item name="colorOnSecondary">@color/lightPrimary</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/onForeground</item>
+
+        <item name="android:statusBarColor">@color/foreground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="actionBarStyle">@style/Theme.Actionbar</item>
+
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
 
     <style name="Theme.MarkdownEditor" parent="Base.Theme.MarkdownEditor" />
 
     <style name="Theme.Actionbar" parent="Widget.AppCompat.Light.ActionBar">
         <item name="background">@color/foreground</item>
+        <item name="height">48dp</item>
+    </style>
+    
+    <style name="PopupMenuStyle" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@color/onForeground</item>
     </style>
 </resources>
