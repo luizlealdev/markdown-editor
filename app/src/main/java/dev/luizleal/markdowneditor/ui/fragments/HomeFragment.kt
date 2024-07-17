@@ -1,10 +1,13 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
+import android.content.Intent
 import android.icu.util.Calendar
+import android.media.Ringtone
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -19,6 +22,9 @@ import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.adapter.NoteListAdapter
 import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.deleteNote
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
 import dev.luizleal.markdowneditor.utils.StringUtils.Companion.isAValidUrl
 import okhttp3.Call
 import okhttp3.Callback
@@ -30,7 +36,7 @@ import java.io.IOException
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: NoteViewModel
-    private val noteListAdapter = NoteListAdapter()
+    private lateinit var noteListAdapter: NoteListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +81,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupRecyclerView() {
+        noteListAdapter = NoteListAdapter({ note ->
+            openEditFragment(note, true)
+        }, { note, parent ->
+            showMoreActionPopupMenu(note, parent)
+        })
         binding.recyclerviewNotes.apply {
             adapter = noteListAdapter
             layoutManager = LinearLayoutManager(
@@ -101,25 +112,57 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupSpeedViewItemClicked() {
-        binding.speedviewNew.setOnActionSelectedListener { actionItem ->
+        val speedDialView = binding.speedviewNew
+
+        speedDialView.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.fab_write_new -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToEditorFragment(null)
-                    this.findNavController().navigate(action)
-
-                    true
+                    openEditFragment()
                 }
 
                 R.id.fab_import_from_link -> {
                     showAlertDialogForImport()
+                }
+
+                R.id.fab_import_from_file -> {
+
+                }
+            }
+            speedDialView.close()
+            true
+        }
+    }
+
+    private fun showMoreActionPopupMenu(note: Note, parent: View) {
+        val popupMenu = PopupMenu(requireContext(), parent)
+
+        popupMenu.menuInflater.inflate(R.menu.note_holder_options, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener {menuItem ->
+            when (menuItem.itemId) {
+                R.id.delete -> {
+                    deleteNote(viewModel, note)
+
                     true
                 }
-//                R.id.fab_import_from_file -> {
-//
-//                }
+                R.id.share -> {
+                    shareText(
+                        requireActivity(),
+                        getString(R.string.share_using),
+                        getString(R.string.share),
+                        note.text
+                    )
+
+                    true
+                }
+                R.id.copy -> {
+                    copyText(requireActivity(), note.text)
+
+                    true
+                }
                 else -> false
             }
         }
+        popupMenu.show()
     }
 
     private fun showAlertDialogForImport() {
@@ -184,6 +227,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             ).show()
 
         }
+    }
+
+    private fun openEditFragment(note: Note? = null, isEditing: Boolean = false) {
+        val action = HomeFragmentDirections.actionHomeFragmentToEditorFragment(note, isEditing)
+        this.findNavController().navigate(action)
     }
 
     private fun saveNote(text: String) {
