@@ -1,5 +1,7 @@
 [versions]
 agp = "8.5.0"
+androidGifDrawable = "1.2.14"
+androidsvg = "1.4"
 core = "4.6.2"
 extTables = "4.6.2"
 extTasklist = "4.6.2"
@@ -23,6 +25,8 @@ navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
 
 [libraries]
+android-gif-drawable = { module = "pl.droidsonroids.gif:android-gif-drawable", version.ref = "androidGifDrawable" }
+androidsvg = { module = "com.caverock:androidsvg", version.ref = "androidsvg" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleLivedataKtx" }

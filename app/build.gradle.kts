@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.markwon.linkify)
     implementation(libs.markwon.ext.tasklist)
     implementation(libs.markwon.ext.tables)
+    implementation(libs.androidsvg)
+    implementation(libs.android.gif.drawable)
 
     //SpeedDial
     implementation(libs.speed.dial)
