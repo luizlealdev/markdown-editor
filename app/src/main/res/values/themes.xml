@@ -27,4 +27,8 @@
     <style name="PopupMenuStyle" parent="Widget.Material3.PopupMenu">
         <item name="android:popupBackground">@color/onForeground</item>
     </style>
+
+    <style name="MaterialAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/foreground</item>
+    </style>
 </resources>

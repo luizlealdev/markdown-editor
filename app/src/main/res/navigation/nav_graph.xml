@@ -21,8 +21,8 @@
         tools:layout="@layout/fragment_edit">
         <argument
             android:name="note"
-            app:argType="dev.luizleal.markdowneditor.model.Note"
-            app:nullable="true" />
+            app:nullable="true"
+            app:argType="dev.luizleal.markdowneditor.model.Note" />
         <argument
             android:name="is_editing"
             android:defaultValue="false"

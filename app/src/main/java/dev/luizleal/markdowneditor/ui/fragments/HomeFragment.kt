@@ -169,7 +169,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_import_from_url, null)
         val textfield = dialogView.findViewById<TextInputEditText>(R.id.textfield_url)
 
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialogStyle)
             .setView(dialogView)
             .setPositiveButton(getString(R.string.positive_button)) { _, _ ->
 
