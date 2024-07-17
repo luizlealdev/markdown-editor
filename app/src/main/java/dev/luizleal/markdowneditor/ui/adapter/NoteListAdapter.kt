@@ -1,5 +1,6 @@
 package dev.luizleal.markdowneditor.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +8,7 @@ import dev.luizleal.markdowneditor.databinding.NoteItemHolderBinding
 import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.utils.CalendarUtils.Companion.getMouthName
 
-class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
+class NoteListAdapter(private val onItemClicked: (Note) -> Unit): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
     private var items: List<Note> = ArrayList()
 
     fun setItems(items: List<Note>) {
@@ -25,7 +26,7 @@ class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         when (holder) {
             is NoteViewHolder -> {
-                holder.bind(items[position])
+                holder.bind(items[position], onItemClicked)
             }
         }
     }
@@ -34,16 +35,20 @@ class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() 
         return items.size
     }
 
-    class NoteViewHolder(binding: NoteItemHolderBinding): RecyclerView.ViewHolder(binding.root) {
+    class NoteViewHolder(private var binding: NoteItemHolderBinding): RecyclerView.ViewHolder(binding.root) {
         private var title = binding.textTitle
         private var date = binding.textDate
 
-        fun bind(note: Note) {
+        fun bind(note: Note, onItemClicked: (Note) -> Unit) {
             title.text = note.text.lineSequence().first()
 
             val mouthName = getMouthName(note.lastUpdateMonth)
             val formatedDate =  "${note.lastUpdateDay} $mouthName"
             date.text = formatedDate
+
+            binding.root.setOnClickListener {
+                onItemClicked(note)
+            }
         }
     }
 
