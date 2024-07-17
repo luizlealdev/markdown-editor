@@ -2,7 +2,7 @@
 <resources>
     <color name="bgColor">#121212</color>
     <color name="foreground">#1A1A1A</color>
-    <color name="onForeground">#252525</color>
+    <color name="onForeground">#1E1E1E</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="textMarkdownBaseColor">#D9D9D9</color>
     <color name="textColorSecondary">#ffffff</color>
