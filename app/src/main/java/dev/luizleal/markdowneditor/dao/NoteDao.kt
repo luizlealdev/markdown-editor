@@ -12,7 +12,7 @@ import dev.luizleal.markdowneditor.model.Note
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM ${DatabaseConstants.NOTE_TABLE}")
+    @Query("SELECT * FROM ${DatabaseConstants.NOTE_TABLE} ORDER BY id DESC")
     fun getAllNotes(): LiveData<List<Note>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
