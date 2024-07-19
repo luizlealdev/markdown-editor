@@ -23,6 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Task title"
+                android:maxLines="1"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
