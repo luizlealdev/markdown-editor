@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/foreground"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp">
+
+        <ImageButton
+            android:id="@+id/button_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/bold"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_bold"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/italic"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_italic"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/link"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_add_link"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/image"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_image"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_list_bullet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/unordered_list"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_list_bullet"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_list_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/ordered_list"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_list_numbered"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/heading"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_heading"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/quote"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_quote"
+            app:tint="@color/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/button_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/code"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_code"
+            app:tint="@color/textColorPrimary" />
+    </LinearLayout>
+</HorizontalScrollView>
