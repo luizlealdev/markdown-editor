@@ -11,4 +11,6 @@
     <color name="textColorPrimary">#27242c</color>
     <color name="textMarkdownBaseColor">#3B3940</color>
     <color name="textColorSecondary">#8a8a8e</color>
+
+    <color name="overlayColor">#AC000000</color>
 </resources>
