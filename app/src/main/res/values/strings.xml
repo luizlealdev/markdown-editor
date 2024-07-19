@@ -21,4 +21,13 @@
     <string name="invalid_url">Invalid URL</string>
     <string name="import_from_url_success">Markdown imported successfully!</string>
     <string name="share_using">Share using:</string>
+    <string name="bold">Bold</string>
+    <string name="italic">Italic</string>
+    <string name="link">Link</string>
+    <string name="image">Image</string>
+    <string name="unordered_list">Unordered list</string>
+    <string name="ordered_list">Ordered list</string>
+    <string name="heading">Heading</string>
+    <string name="quote">Quote</string>
+    <string name="code">Code</string>
 </resources>
