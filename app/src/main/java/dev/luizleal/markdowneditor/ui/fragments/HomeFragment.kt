@@ -1,12 +1,15 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
 import android.icu.util.Calendar
-import android.media.Ringtone
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,12 +34,32 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: NoteViewModel
     private lateinit var noteListAdapter: NoteListAdapter
+
+    private val REQUEST_CODE = 100
+
+    private val readStoragePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                openFilePicker()
+            } else {
+                Log.e("Permission err", "Permission Denied")
+            }
+        }
+
+    private val filePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                readFile(it)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,7 +148,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
 
                 R.id.fab_import_from_file -> {
-
+                    requestPermissionAndOpenFilePicker()
                 }
             }
             speedDialView.close()
@@ -137,13 +160,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val popupMenu = PopupMenu(requireContext(), parent)
 
         popupMenu.menuInflater.inflate(R.menu.note_holder_options, popupMenu.menu)
-        popupMenu.setOnMenuItemClickListener {menuItem ->
+        popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.delete -> {
                     deleteNote(viewModel, note)
 
                     true
                 }
+
                 R.id.share -> {
                     shareText(
                         requireActivity(),
@@ -154,11 +178,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                     true
                 }
+
                 R.id.copy -> {
                     copyText(requireActivity(), note.text)
 
                     true
                 }
+
                 else -> false
             }
         }
@@ -227,6 +253,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             ).show()
 
         }
+    }
+
+    private fun requestPermissionAndOpenFilePicker() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                openFilePicker()
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                Log.e("Permission err", "Permission Denied")
+                readStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+
+            else -> readStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    private fun openFilePicker() {
+        filePickerLauncher.launch("*/*")
+    }
+
+    private fun readFile(uri: Uri) {
+        val inputStream = requireActivity().contentResolver.openInputStream(uri)
+        val reader = BufferedReader(InputStreamReader(inputStream))
+
+        val stringBuilder = StringBuilder()
+        reader.forEachLine { line ->
+            stringBuilder.append(line).append('\n')
+        }
+        val fileContent = stringBuilder.toString()
+        saveNote(fileContent)
     }
 
     private fun openEditFragment(note: Note? = null, isEditing: Boolean = false) {
