@@ -16,6 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/progress_loading_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.leinardi.android.speeddial.SpeedDialOverlayLayout
         android:id="@+id/speedview_overlay"
         android:layout_width="0dp"
@@ -32,11 +41,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:sdMainFabAnimationRotateAngle="90"
-        app:sdOverlayLayout="@id/speedview_overlay"
         app:sdMainFabClosedBackgroundColor="@color/primary"
         app:sdMainFabClosedIconColor="@color/white"
         app:sdMainFabClosedSrc="@drawable/ic_add"
         app:sdMainFabOpenedBackgroundColor="@color/primary"
-        app:sdMainFabOpenedSrc="@drawable/ic_close" />
+        app:sdMainFabOpenedSrc="@drawable/ic_close"
+        app:sdOverlayLayout="@id/speedview_overlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

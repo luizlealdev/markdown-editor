@@ -100,6 +100,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.allNotes.observe(this) { items ->
             noteListAdapter.setItems(items)
+
+            binding.progressLoadingNotes.visibility = View.GONE
         }
     }
 
