@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/bgColor"
     android:layout_height="match_parent"
+    android:background="@color/bgColor"
     tools:context=".ui.fragments.EditFragment">
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/markdown_tips"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,9 +30,9 @@
                 android:hint="@string/write_the_markdown_here"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:minHeight="50dp"
-                android:paddingVertical="8dp"
+                android:minHeight="100dp"
                 android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,10 +56,11 @@
     </ScrollView>
 
     <include
+        android:id="@+id/markdown_tips"
         layout="@layout/markdown_tips"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="wrap_content" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
