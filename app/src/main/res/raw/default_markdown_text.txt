@@ -1,0 +1,26 @@
+# Markdown Example
+
+## Formatting Text
+
+*Italic text* can be created by surrounding the text with asterisks or underscores.
+
+**Bold text** can be created by surrounding the text with double asterisks or double underscores.
+
+## Images
+
+![Sample Image](https://c.tenor.com/5BYK-WS0__gAAAAC/tenor.gif)
+
+## Links
+
+Here is the [Luiz Leal's Github profile](https://github.com/luizlealdev).
+
+## Code Blocks
+
+Inline code can be included with backticks, like this: `inline code`.
+
+For a block of code, use triple backticks:
+
+```kotlin
+fun main() {
+    println("Hello World!")
+}
