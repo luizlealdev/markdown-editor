@@ -3,12 +3,14 @@ package dev.luizleal.markdowneditor.ui.fragments
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
@@ -22,6 +24,7 @@ import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.readRawFile
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -47,6 +50,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private lateinit var markwon: Markwon
 
+    private lateinit var editTextNote: EditText
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,14 +67,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         viewModel = (activity as MainActivity).viewModel
         note = args.note
 
+        editTextNote = binding.editNote
+
         setupMenu()
         setupMarkwon()
         setTextInMarkdownEditText()
         setEditTextOccupationScreen()
-    }
-
-    override fun onStart() {
-        super.onStart()
+        setupMarkdownTips()
     }
 
     override fun onDestroy() {
@@ -81,23 +85,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         val isEditing = args.isEditing
 
         val markdown = if (!isEditing && note == null) {
-            """
-            # Markdown title
-            
-            **text bold**, _text italic_ 
-            
-            ## This is a list
-            - item 1
-            - item 2
-            - item 3
-            
-            ## This is a code block
-            ```kotlin
-            fun main() {
-                println("Hello World!")
-            }
-            ```
-            """.trimIndent()
+            readRawFile(requireContext(), R.raw.default_markdown_text)
         } else {
             note!!.text
         }
@@ -105,48 +93,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         binding.editNote.setText(markdown)
     }
 
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.actionbar_edit_options, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.title) {
-
-                    getString(R.string.preview) -> {
-                        setEditorToggleMode(false)
-                        setMarkdown()
-
-                        menuItem.apply {
-                            title = getString(R.string.editor)
-                            setIcon(R.drawable.ic_edit)
-                        }
-                        true
-                    }
-
-                    getString(R.string.editor) -> {
-                        setEditorToggleMode(true)
-                        menuItem.apply {
-                            title = getString(R.string.preview)
-                            setIcon(R.drawable.ic_note)
-                        }
-                        true
-                    }
-
-                    getString(R.string.more) -> {
-                        showMoreActionsPopupMenu(
-                            requireActivity().findViewById(R.id.more_actions)
-                        )
-                        true
-                    }
-
-                    else -> false
-                }
-            }
-
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
     private fun setEditTextOccupationScreen() {
         val windowHeight = Resources.getSystem().displayMetrics.heightPixels
@@ -154,24 +100,48 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     }
 
     private fun setEditorToggleMode(isEditing: Boolean) {
-        val editNote = binding.editNote
         val textMarkdown = binding.textMarkdown
+        val markdownTips = binding.markdownTips.root
 
         if (isEditing) {
 
-            editNote.visibility = View.VISIBLE
+            editTextNote.visibility = View.VISIBLE
+            markdownTips.visibility = View.VISIBLE
             textMarkdown.visibility = View.GONE
 
         } else {
 
-            editNote.visibility = View.GONE
+            editTextNote.visibility = View.GONE
+            markdownTips.visibility = View.GONE
             textMarkdown.visibility = View.VISIBLE
 
         }
     }
 
+    private fun setTipIntoEditText(tip: String) {
+        val currentCursorPosition = editTextNote.selectionStart
+        val fullText = editTextNote.text.toString()
+
+        val textBeforeCursor = fullText.substring(0, currentCursorPosition)
+        val textAfterCursor = fullText.substring(currentCursorPosition)
+
+        val tipCursorPosition = tip.indexOf(":cursor")
+        val tipStart = tip.substring(0, tipCursorPosition)
+        val tipEnd = tip.substring(tipCursorPosition)
+
+        Log.d("tip start", tipStart)
+        Log.d("tip end", tipEnd)
+
+
+        val formatedText = textBeforeCursor + tipStart + tipEnd + textAfterCursor
+        editTextNote.apply {
+            setText(formatedText.replace(":cursor", "", true))
+            setSelection(currentCursorPosition + tipStart.length)
+        }
+    }
+
     private fun setMarkdown() {
-        val markdown = binding.editNote.text.toString().trimIndent()
+        val markdown = editTextNote.text.toString().trimIndent()
         markwon.setMarkdown(binding.textMarkdown, markdown)
     }
 
@@ -180,7 +150,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         popupMenu.menuInflater.inflate(R.menu.more_action_options, popupMenu.menu)
 
         popupMenu.setOnMenuItemClickListener { menuItem ->
-            val contentNote = binding.editNote.text.toString()
+            val contentNote = editTextNote.text.toString()
 
             when (menuItem.itemId) {
                 R.id.save -> {
@@ -235,6 +205,27 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         }
     }
 
+    private fun setupMarkdownTips() {
+        val markdownTips = binding.markdownTips
+        val tips = mapOf(
+            markdownTips.buttonBold to R.raw.tip_bold,
+            markdownTips.buttonItalic to R.raw.tip_italic,
+            markdownTips.buttonImage to R.raw.tip_image,
+            markdownTips.buttonLink to R.raw.tip_link,
+            markdownTips.buttonHeading to R.raw.tip_heading,
+            markdownTips.buttonListBullet to R.raw.tip_unordered_list,
+            markdownTips.buttonListNumber to R.raw.tip_ordered_list,
+            markdownTips.buttonQuote to R.raw.tip_quote,
+            markdownTips.buttonCode to R.raw.tip_code,
+        )
+
+        for ((element, raw) in tips) {
+            element.setOnClickListener {
+                setTipIntoEditText(readRawFile(requireContext(), raw))
+            }
+        }
+    }
+
     private fun setupMarkwon() {
         markwon = Markwon.builder(requireContext())
             .usePlugin(ImagesPlugin.create { plugin ->
@@ -273,4 +264,46 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             .build()
     }
 
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.actionbar_edit_options, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.title) {
+
+                    getString(R.string.preview) -> {
+                        setEditorToggleMode(false)
+                        setMarkdown()
+
+                        menuItem.apply {
+                            title = getString(R.string.editor)
+                            setIcon(R.drawable.ic_edit)
+                        }
+                        true
+                    }
+
+                    getString(R.string.editor) -> {
+                        setEditorToggleMode(true)
+                        menuItem.apply {
+                            title = getString(R.string.preview)
+                            setIcon(R.drawable.ic_note)
+                        }
+                        true
+                    }
+
+                    getString(R.string.more) -> {
+                        showMoreActionsPopupMenu(
+                            requireActivity().findViewById(R.id.more_actions)
+                        )
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
 }

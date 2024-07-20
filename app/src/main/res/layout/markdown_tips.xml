@@ -21,6 +21,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_bold"
+            android:tooltipText="@string/bold"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -33,6 +34,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_italic"
+            android:tooltipText="@string/italic"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -45,6 +47,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_add_link"
+            android:tooltipText="@string/link"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -57,6 +60,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_image"
+            android:tooltipText="@string/image"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -69,6 +73,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_list_bullet"
+            android:tooltipText="@string/unordered_list"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -81,6 +86,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_list_numbered"
+            android:tooltipText="@string/ordered_list"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -93,6 +99,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_heading"
+            android:tooltipText="@string/heading"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -105,6 +112,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_quote"
+            android:tooltipText="@string/quote"
             app:tint="@color/textColorPrimary" />
 
         <ImageButton
@@ -117,6 +125,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_code"
+            android:tooltipText="@string/code"
             app:tint="@color/textColorPrimary" />
     </LinearLayout>
 </HorizontalScrollView>

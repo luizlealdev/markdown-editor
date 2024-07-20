@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
+import java.io.BufferedReader
 
 class CommonUtils {
     companion object {
@@ -29,5 +30,17 @@ class CommonUtils {
         fun deleteNote(viewModel: NoteViewModel, note: Note) {
             viewModel.deleteNote(note)
         }
+
+        fun readRawFile(context: Context, resId: Int): String {
+            return context.resources.openRawResource(resId).bufferedReader().use(BufferedReader::readText)
+        }
+
+//        fun saveNote(viewModel: NoteViewModel, note: Note) {
+//            viewModel.insertNote(note)
+//        }
+//
+//        fun updateNote(viewModel: NoteViewModel, note: Note) {
+//            viewModel.updateNote(note)
+//        }
     }
 }
