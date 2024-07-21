@@ -76,6 +76,9 @@ dependencies {
     implementation(libs.androidsvg)
     implementation(libs.android.gif.drawable)
 
+    //CodeView
+    implementation(libs.codeview)
+
     //SpeedDial
     implementation(libs.speed.dial)
 
