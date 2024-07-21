@@ -299,7 +299,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                         setEditorToggleMode(true)
                         menuItem.apply {
                             title = getString(R.string.preview)
-                            setIcon(R.drawable.ic_note)
+                            setIcon(R.drawable.ic_eye)
                         }
                         true
                     }
