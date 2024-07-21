@@ -8,11 +8,11 @@
 
 ## Images
 
-![Sample Image](https://c.tenor.com/5BYK-WS0__gAAAAC/tenor.gif)
+![Sample Image](https://avatars.githubusercontent.com/u/121569308?v=4)
 
 ## Links
 
-Here is the [Luiz Leal's Github profile](https://github.com/luizlealdev).
+Here is [my Github profile](https://github.com/luizlealdev).
 
 ## Code Blocks
 
@@ -20,7 +20,46 @@ Inline code can be included with backticks, like this: `inline code`.
 
 For a block of code, use triple backticks:
 
-```kotlin
-fun main() {
-    println("Hello World!")
-}
+```python
+def hello_world():
+    print("Hello, world!")
+```
+
+## Lists
+
+### Unordered List
+
+- Item 1
+- Item 2
+  - Subitem 2.1
+  - Subitem 2.2
+- Item 3
+
+### Ordered List
+
+1. First item
+2. Second item
+   1. Subitem 2.1
+   2. Subitem 2.2
+3. Third item
+
+## Blockquote
+
+> This is a quote from someone important.
+
+## Combining Elements
+
+Here is a paragraph that includes **bold text**, *italic text*, a [link](https://www.example.com), and an image:
+
+## Task List
+
+- [x] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+## Table
+
+| Header 1 | Header 2 |
+|----------|----------|
+| Row 1    | Data 1   |
+| Row 2    | Data 2   |
