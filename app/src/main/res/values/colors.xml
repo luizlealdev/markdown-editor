@@ -13,4 +13,13 @@
     <color name="textColorSecondary">#8a8a8e</color>
 
     <color name="overlayColor">#AC000000</color>
+
+    <color name="markdownHeadingColor">#1571F1</color>
+    <color name="markdownBoldColor">#2596be</color>
+    <color name="markdownItalicColor">#63bc28</color>
+    <color name="markdownImageColor">#e59316</color>
+    <color name="markdownLinkColor">#e7265e</color>
+    <color name="markdownListColor">#D6489D</color>
+    <color name="markdownQuoteColor">#7A7A7A</color>
+    <color name="markdownCodeBlockColor">#8e68cc</color>
 </resources>

@@ -24,6 +24,7 @@ import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.getSyntaxHighLightPattern
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.readRawFile
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -71,6 +72,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         setupMenu()
         setupMarkwon()
+        setupCodeView()
         setTextInMarkdownEditText()
         setEditTextOccupationScreen()
         setupMarkdownTips()
@@ -262,6 +264,15 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             .usePlugin(TablePlugin.create(requireContext()))
             .usePlugin(TaskListPlugin.create(requireContext()))
             .build()
+    }
+
+    private fun setupCodeView() {
+        val codeView = binding.editNote
+        codeView.apply {
+            setSyntaxPatternsMap(getSyntaxHighLightPattern(requireContext()))
+            setEnableLineNumber(true)
+            setHorizontallyScrolling(false)
+        }
     }
 
     private fun setupMenu() {
