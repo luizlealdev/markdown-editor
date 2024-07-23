@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MarkdownEditor" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.MarkdownEditor" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>
@@ -15,6 +15,8 @@
         <item name="actionBarStyle">@style/Theme.Actionbar</item>
 
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+
+        <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
     </style>
 
     <style name="Theme.MarkdownEditor" parent="Base.Theme.MarkdownEditor" />
@@ -26,6 +28,7 @@
     
     <style name="PopupMenuStyle" parent="Widget.Material3.PopupMenu">
         <item name="android:popupBackground">@color/onForeground</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="MaterialAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
