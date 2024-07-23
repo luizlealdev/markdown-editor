@@ -27,6 +27,7 @@
                 android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:ellipsize="end"
                 app:layout_constraintEnd_toStartOf="@id/button_note_more_actions"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"

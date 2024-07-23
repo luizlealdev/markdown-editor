@@ -3,7 +3,6 @@ package dev.luizleal.markdowneditor.ui.fragments
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,12 +10,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.databinding.FragmentEditBinding
@@ -78,6 +80,23 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         setupMarkdownTips()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        val activity = (activity as? AppCompatActivity)
+        val toolbar = requireView().findViewById<Toolbar>(R.id.toolbar)
+
+        activity?.setSupportActionBar(toolbar)
+        activity?.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = null
+        }
+
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -131,10 +150,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         val tipStart = tip.substring(0, tipCursorPosition)
         val tipEnd = tip.substring(tipCursorPosition)
 
-        Log.d("tip start", tipStart)
-        Log.d("tip end", tipEnd)
-
-
         val formatedText = textBeforeCursor + tipStart + tipEnd + textAfterCursor
         editTextNote.apply {
             setText(formatedText.replace(":cursor", "", true))
@@ -185,7 +200,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private fun saveNote(text: String) {
         val currentDate = Calendar.getInstance()
-
 
         if (note == null) {
             viewModel.insertNote(
@@ -278,7 +292,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.actionbar_edit_options, menu)
+                menuInflater.inflate(R.menu.edit_menu_actionbar, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

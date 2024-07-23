@@ -7,6 +7,16 @@
     android:background="@color/bgColor"
     tools:context=".ui.fragments.EditFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/foreground"
+        app:menu="@menu/edit_menu_actionbar"/>
+
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="0dp"
@@ -14,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@id/markdown_tips"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

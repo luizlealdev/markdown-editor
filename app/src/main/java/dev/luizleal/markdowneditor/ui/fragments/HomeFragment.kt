@@ -1,18 +1,28 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -42,8 +52,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: NoteViewModel
     private lateinit var noteListAdapter: NoteListAdapter
-
-    private val REQUEST_CODE = 100
 
     private val readStoragePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -75,6 +83,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
+
+        val toolbar = requireView().findViewById<Toolbar>(R.id.toolbar)
+        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+        setupMenu()
     }
 
     override fun onStart() {
@@ -136,6 +148,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
     }
 
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.home_menu_actionabar, menu)
+
+                val searchButton = menu.findItem(R.id.search_button)
+                val searchView = searchButton.actionView as SearchView
+                searchView.apply {
+                    maxWidth = Integer.MAX_VALUE
+                    isSubmitButtonEnabled = false
+                }
+
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return false
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
     private fun setupSpeedViewItemClicked() {
         val speedDialView = binding.speedviewNew
 
@@ -161,11 +204,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showMoreActionPopupMenu(note: Note, parent: View) {
         val popupMenu = PopupMenu(requireContext(), parent)
 
-        popupMenu.menuInflater.inflate(R.menu.note_holder_options, popupMenu.menu)
+        popupMenu.menuInflater.inflate(R.menu.menu_note_item_holder, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.delete -> {
                     deleteNote(viewModel, note)
+
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.note_deleted_message),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
 
                     true
                 }

@@ -10,7 +10,9 @@
     <string name="editor">Editor</string>
     <string name="save">Save</string>
     <string name="copy">Copy</string>
+    <string name="rename">Rename</string>
     <string name="delete">Delete</string>
+    <string name="search">Search</string>
     <string name="share">Share</string>
     <string name="more">More</string>
     <string name="undo">Undo</string>
@@ -18,6 +20,7 @@
     <string name="url">URL</string>
     <string name="positive_button">OK</string>
     <string name="negative_button">Cancel</string>
+    <string name="note_deleted_message">Note deleted</string>
     <string name="import_from_url_error">Error importing markdown, please check the url.</string>
     <string name="import_from_url_error_serverless">Error importing markdown. The server is not available now.</string>
     <string name="invalid_url">Invalid URL</string>
@@ -32,4 +35,5 @@
     <string name="heading">Heading</string>
     <string name="quote">Quote</string>
     <string name="code">Code</string>
+    <string name="markdown_list">Markdown list</string>
 </resources>
