@@ -4,12 +4,12 @@
     <item
         android:id="@+id/undo"
         android:icon="@drawable/ic_undo"
-        android:title="@string/more"
+        android:title="@string/undo"
         app:showAsAction="always" />
     <item
         android:id="@+id/redo"
         android:icon="@drawable/ic_redo"
-        android:title="@string/more"
+        android:title="@string/redo"
         app:showAsAction="always" />
     <item
         android:id="@+id/preview_mode"
