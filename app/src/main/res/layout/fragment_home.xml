@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/foreground"
+        app:titleTextColor="@color/textColorPrimary"
         app:title="@string/markdown_list"/>
 
     <androidx.recyclerview.widget.RecyclerView
