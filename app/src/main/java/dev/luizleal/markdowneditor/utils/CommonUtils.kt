@@ -30,10 +30,6 @@ class CommonUtils {
             clipboard.setPrimaryClip(clip)
         }
 
-        fun deleteNote(viewModel: NoteViewModel, note: Note) {
-            viewModel.deleteNote(note)
-        }
-
         fun readRawFile(context: Context, resId: Int): String {
             return context.resources.openRawResource(resId).bufferedReader()
                 .use(BufferedReader::readText)
@@ -64,12 +60,16 @@ class CommonUtils {
             return syntaxPattern
         }
 
-//        fun saveNote(viewModel: NoteViewModel, note: Note) {
-//            viewModel.insertNote(note)
-//        }
-//
-//        fun updateNote(viewModel: NoteViewModel, note: Note) {
-//            viewModel.updateNote(note)
-//        }
+        fun saveNote(viewModel: NoteViewModel, note: Note) {
+            viewModel.insertNote(note)
+        }
+
+        fun updateNote(viewModel: NoteViewModel, note: Note) {
+            viewModel.updateNote(note)
+        }
+
+        fun deleteNote(viewModel: NoteViewModel, note: Note) {
+            viewModel.deleteNote(note)
+        }
     }
 }
