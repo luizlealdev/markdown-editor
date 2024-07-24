@@ -7,6 +7,8 @@ import dev.luizleal.markdowneditor.model.Note
 class NoteRepository(private val noteDao: NoteDao) {
     val allNotes: LiveData<List<Note>> = noteDao.getAllNotes()
 
+    fun searchNote(query: String)= noteDao.searchNote(query)
+
     suspend fun insertNote(note: Note) = noteDao.insertNote(note)
 
     suspend fun updateNote(note: Note) = noteDao.updateNote(note)

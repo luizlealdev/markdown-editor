@@ -23,4 +23,7 @@ interface NoteDao {
 
     @Delete
     suspend fun deleteNote(note: Note)
+
+    @Query("SELECT * FROM ${DatabaseConstants.NOTE_TABLE} WHERE text LIKE :query")
+    fun searchNote(query: String): LiveData<List<Note>>
 }

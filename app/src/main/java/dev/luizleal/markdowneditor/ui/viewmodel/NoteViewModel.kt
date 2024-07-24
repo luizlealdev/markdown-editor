@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 class NoteViewModel(private val repository: NoteRepository): ViewModel() {
     val allNotes: LiveData<List<Note>> = repository.allNotes
 
+    fun searchNote(query: String) = repository.searchNote(query)
+
     fun insertNote(note: Note) = viewModelScope.launch {
         repository.insertNote(note)
     }
