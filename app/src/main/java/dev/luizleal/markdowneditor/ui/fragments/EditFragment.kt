@@ -286,6 +286,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             setSyntaxPatternsMap(getSyntaxHighLightPattern(requireContext()))
             setEnableLineNumber(true)
             setHorizontallyScrolling(false)
+            setLineNumberTextSize(32f)
+            setLineNumberTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.textColorSecondary
+                )
+            )
         }
     }
 
