@@ -61,7 +61,7 @@ class CommonUtils {
             return syntaxPattern
         }
 
-        fun saveNote(viewModel: NoteViewModel, note: Note) {
+        fun insertNote(viewModel: NoteViewModel, note: Note) {
             viewModel.insertNote(note)
         }
 
