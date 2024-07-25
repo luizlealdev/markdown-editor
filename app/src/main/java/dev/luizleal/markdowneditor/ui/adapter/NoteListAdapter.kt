@@ -48,7 +48,7 @@ class NoteListAdapter(
             onItemClicked: (Note) -> Unit,
             onMoreActionsButtonClicked: (Note, parent: View) -> Unit
         ) {
-            title.text = note.text.lineSequence().first()
+            title.text = note.text.lineSequence().first().replace("#", "").trim()
 
             val mouthName = getMouthName(note.lastUpdateMonth)
             val formatedDate = "${note.lastUpdateDay} $mouthName"
