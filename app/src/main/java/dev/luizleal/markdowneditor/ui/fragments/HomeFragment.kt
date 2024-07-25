@@ -36,6 +36,7 @@ import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.deleteNote
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.insertNote
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.searchNote
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
 import dev.luizleal.markdowneditor.utils.StringUtils.Companion.isAValidUrl
@@ -112,6 +113,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.allNotes.observe(this) { items ->
             noteListAdapter.setItems(items)
+            binding.textCentralNotice.visibility = View.GONE
+
+            if (items.isEmpty()) {
+                binding.textCentralNotice.apply {
+                    visibility = View.VISIBLE
+                    text = getString(R.string.none_note_created_message)
+                }
+
+            }
 
             binding.progressLoadingNotes.visibility = View.GONE
         }
@@ -166,9 +176,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        newText?.let { text ->
-                            searchNote(viewModel, viewLifecycleOwner, text) {searchedNotes ->
+                        newText?.let { query ->
+                            searchNote(viewModel, viewLifecycleOwner, query) { searchedNotes ->
                                 noteListAdapter.setItems(searchedNotes)
+
+                                binding.textCentralNotice.visibility = View.GONE
+
+                                if (searchedNotes.isEmpty()) {
+                                    binding.textCentralNotice.apply {
+                                        visibility = View.VISIBLE
+                                        text = getString(R.string.none_note_found_message)
+                                    }
+                                }
                             }
                         }
                         return true
@@ -351,14 +370,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun saveNote(text: String) {
         val currentDate = Calendar.getInstance()
-
-        viewModel.insertNote(
-            Note(
-                id = null,
-                text = text,
-                lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
-                lastUpdateMonth = currentDate.get(Calendar.MONTH),
-            )
+        val note = Note(
+            id = null,
+            text = text,
+            lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
+            lastUpdateMonth = currentDate.get(Calendar.MONTH),
         )
+
+        insertNote(viewModel, note)
     }
 }
