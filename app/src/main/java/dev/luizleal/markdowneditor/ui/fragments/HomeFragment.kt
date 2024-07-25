@@ -1,7 +1,6 @@
 package dev.luizleal.markdowneditor.ui.fragments
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.util.Calendar
 import android.net.Uri
@@ -37,6 +36,7 @@ import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.deleteNote
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.searchNote
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
 import dev.luizleal.markdowneditor.utils.StringUtils.Companion.isAValidUrl
 import okhttp3.Call
@@ -151,24 +151,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.home_menu_actionabar, menu)
+                menuInflater.inflate(R.menu.home_menu_actionbar, menu)
 
                 val searchButton = menu.findItem(R.id.search_button)
                 val searchView = searchButton.actionView as SearchView
                 searchView.apply {
-                    maxWidth = Integer.MAX_VALUE
                     isSubmitButtonEnabled = false
+                    maxWidth = Integer.MAX_VALUE
                 }
 
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                        TODO("Not yet implemented")
+                        return false
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        TODO("Not yet implemented")
+                        newText?.let { text ->
+                            searchNote(viewModel, viewLifecycleOwner, text) {searchedNotes ->
+                                noteListAdapter.setItems(searchedNotes)
+                            }
+                        }
+                        return true
                     }
-
                 })
             }
 

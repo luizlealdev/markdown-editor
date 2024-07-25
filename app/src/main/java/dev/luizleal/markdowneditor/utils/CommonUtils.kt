@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import dev.luizleal.markdowneditor.R
 import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
@@ -36,7 +37,7 @@ class CommonUtils {
         }
 
         fun getSyntaxHighLightPattern(context: Context): Map<Pattern, Int> {
-            val syntaxPattern= mutableMapOf<Pattern, Int>()
+            val syntaxPattern = mutableMapOf<Pattern, Int>()
 
             val syntaxRegexAndColor = mutableMapOf(
                 "^(#{1,6})\\s+.*$" to R.color.markdownHeadingColor,
@@ -70,6 +71,19 @@ class CommonUtils {
 
         fun deleteNote(viewModel: NoteViewModel, note: Note) {
             viewModel.deleteNote(note)
+        }
+
+        fun searchNote(
+            viewModel: NoteViewModel,
+            owner: LifecycleOwner,
+            query: String,
+            callback: (List<Note>) -> Unit
+        ) {
+            val formatedQuery = "%$query%"
+
+            viewModel.searchNote(formatedQuery).observe(owner) { items ->
+                callback(items)
+            }
         }
     }
 }
