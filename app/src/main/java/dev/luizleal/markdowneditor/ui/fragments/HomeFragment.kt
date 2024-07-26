@@ -231,14 +231,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.delete -> {
-                    deleteNote(viewModel, note)
+                    try {
 
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.note_deleted_message),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                        deleteNote(viewModel, note)
 
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.note_deleted_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } catch (e: IOException) {
+                        Log.e("Error while deleting note in db", e.toString())
+                    }
                     true
                 }
 
