@@ -27,8 +27,10 @@ import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.getSyntaxHighLightPattern
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.insertNote
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.readRawFile
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.shareText
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.updateNote
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonSpansFactory
@@ -202,7 +204,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         val currentDate = Calendar.getInstance()
 
         if (note == null) {
-            viewModel.insertNote(
+            insertNote(
+                viewModel,
                 Note(
                     text = text,
                     lastUpdateDay = currentDate.get(Calendar.DAY_OF_MONTH),
@@ -210,7 +213,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                 )
             )
         } else {
-            viewModel.updateNote(
+            updateNote(
+                viewModel,
                 Note(
                     id = note!!.id,
                     text = text,
