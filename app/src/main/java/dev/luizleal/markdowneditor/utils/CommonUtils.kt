@@ -61,6 +61,10 @@ class CommonUtils {
             return syntaxPattern
         }
 
+        fun getMarkdownTitle(note: Note): String {
+            return note.text.lineSequence().first().replace("#", "").trim()
+        }
+
         fun insertNote(viewModel: NoteViewModel, note: Note) {
             viewModel.insertNote(note)
         }

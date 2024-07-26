@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.luizleal.markdowneditor.databinding.NoteItemHolderBinding
 import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.utils.CalendarUtils.Companion.getMouthName
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.getMarkdownTitle
 
 class NoteListAdapter(
     private val onItemClicked: (Note) -> Unit,
@@ -48,7 +49,7 @@ class NoteListAdapter(
             onItemClicked: (Note) -> Unit,
             onMoreActionsButtonClicked: (Note, parent: View) -> Unit
         ) {
-            title.text = note.text.lineSequence().first().replace("#", "").trim()
+            title.text = getMarkdownTitle(note)
 
             val mouthName = getMouthName(note.lastUpdateMonth)
             val formatedDate = "${note.lastUpdateDay} $mouthName"

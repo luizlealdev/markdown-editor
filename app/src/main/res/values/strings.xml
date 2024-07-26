@@ -33,6 +33,7 @@
     <string name="quote">Quote</string>
     <string name="code">Code</string>
     <string name="markdown_list">Markdown List</string>
+    <string name="new_markdown_note">New Markdown Note</string>
     <string name="none_note_created_message">You don\'t have any markdown note yet</string>
     <string name="none_note_found_message">No notes founds</string>
 </resources>

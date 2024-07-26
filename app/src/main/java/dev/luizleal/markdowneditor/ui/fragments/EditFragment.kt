@@ -3,8 +3,6 @@ package dev.luizleal.markdowneditor.ui.fragments
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,6 +26,7 @@ import dev.luizleal.markdowneditor.model.Note
 import dev.luizleal.markdowneditor.ui.view.MainActivity
 import dev.luizleal.markdowneditor.ui.viewmodel.NoteViewModel
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.copyText
+import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.getMarkdownTitle
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.getSyntaxHighLightPattern
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.insertNote
 import dev.luizleal.markdowneditor.utils.CommonUtils.Companion.readRawFile
@@ -93,10 +92,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         val activity = (activity as? AppCompatActivity)
         val toolbar = requireView().findViewById<Toolbar>(R.id.toolbar)
 
+        val toolbarTitle =
+            if (note != null) getMarkdownTitle(note!!) else getString(R.string.new_markdown_note)
+
         activity?.setSupportActionBar(toolbar)
         activity?.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = null
+            title = toolbarTitle
         }
 
         toolbar.setNavigationOnClickListener {
