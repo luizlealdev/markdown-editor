@@ -3,6 +3,8 @@ package dev.luizleal.markdowneditor.ui.fragments
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -43,6 +45,7 @@ import io.noties.markwon.image.svg.SvgMediaDecoder
 import io.noties.markwon.linkify.LinkifyPlugin
 import org.commonmark.node.Paragraph
 import java.util.Calendar
+import java.util.Stack
 
 class EditFragment : Fragment(R.layout.fragment_edit) {
     private var _binding: FragmentEditBinding? = null
@@ -56,6 +59,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private lateinit var markwon: Markwon
 
     private lateinit var editTextNote: EditText
+    private val undoStack = Stack<String>()
+    private val redoStack = Stack<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -284,6 +289,26 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             .build()
     }
 
+    private fun undo() {
+        if (undoStack.isNotEmpty()) {
+            val currentText = editTextNote.text.toString()
+            val lastText = undoStack.pop()
+
+            redoStack.push(currentText)
+            editTextNote.setText(lastText)
+        }
+    }
+
+    private fun redo() {
+        if (redoStack.isNotEmpty()) {
+            val currentText = editTextNote.text.toString()
+            val newText = undoStack.pop()
+
+            undoStack.push(currentText)
+            editTextNote.setText(newText)
+        }
+    }
+
     private fun setupCodeView() {
         val codeView = binding.editNote
         codeView.apply {
@@ -308,7 +333,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.title) {
-
                     getString(R.string.preview) -> {
                         setEditorToggleMode(false)
                         setMarkdown()

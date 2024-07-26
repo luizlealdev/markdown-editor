@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Note(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
+    //val title: String,
     val text: String,
     @ColumnInfo(name = "last_update_day") val lastUpdateDay: Int,
     @ColumnInfo(name = "last_update_month") val lastUpdateMonth: Int

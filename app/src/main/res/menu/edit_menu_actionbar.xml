@@ -2,23 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/undo"
-        android:icon="@drawable/ic_undo"
-        android:title="@string/undo"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/redo"
-        android:icon="@drawable/ic_redo"
-        android:title="@string/redo"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/preview_mode"
         android:icon="@drawable/ic_eye"
         android:title="@string/preview"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/more_actions"
         android:icon="@drawable/ic_more"
         android:title="@string/more"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>
