@@ -1,6 +1,6 @@
 
 # Markdown Editor
-<a href="https://github.com/luizlealdev/markdown-editor/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
+<a href="https://github.com/luizlealdev/markdown-editor/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 <a href="https://android-arsenal.com/api?level=24"><img src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat" alt="API version"></a>
 <a href="https://github.com/luizlealdev"><img src="https://img.shields.io/badge/Github-luizlealdev-2ea44f?logo=github&logoColor=white" alt="Luiz Leal's github profile"></a>
 
