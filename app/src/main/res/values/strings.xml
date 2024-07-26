@@ -5,12 +5,12 @@
     <string name="import_from_file">Import from file</string>
     <string name="import_from_url">Import from URL</string>
     <string name="new_markdown">New Markdown</string>
-    <string name="write_the_markdown_here">Write the Markdown here</string>
+    <string name="write_the_markdown_here">Write the Markdown code here</string>
     <string name="preview">Preview</string>
     <string name="editor">Editor</string>
     <string name="save">Save</string>
     <string name="copy">Copy</string>
-    <string name="rename">Rename</string>
+    <string name="export">Export</string>
     <string name="delete">Delete</string>
     <string name="search">Search</string>
     <string name="share">Share</string>
