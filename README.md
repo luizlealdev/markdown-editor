@@ -18,7 +18,7 @@ Markdown Editor demonstrates a simple editor that converts your markdown code an
 </div>
 
 ## 🛠 Tech Stack & Open Source Libraries
-- Minimum SDK level 25.
+- Minimum SDK level 24.
 - [Kotlin language](https://kotlinlang.org/)
 - Jetpack
     - ViewBinding: Connect the components from the XML in Kotlin through a class that ensures type safety and other advantages.
