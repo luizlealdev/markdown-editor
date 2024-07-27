@@ -12,9 +12,9 @@ Markdown Editor demonstrates a simple editor that converts your markdown code an
 
 ## 📷 Previews
 <div align="center">
-  <img width="31%" src="./images/previews/preview-1.png" alt="Screenshot 1"/>
-  <img width="31%" src="./images/previews/preview-2.png" alt="Screenshot 2"/>
-  <img width="31%" src="./images/previews/preview-3.png" alt="Screenshot 3"/>
+  <img width="32%" src="./images/previews/preview-1.png" alt="Screenshot 1"/>
+  <img width="32%" src="./images/previews/preview-2.png" alt="Screenshot 2"/>
+  <img width="32%" src="./images/previews/preview-3.png" alt="Screenshot 3"/>
 </div>
 
 ## 🛠 Tech Stack & Open Source Libraries
@@ -43,17 +43,15 @@ Markdown Editor demonstrates a simple editor that converts your markdown code an
 
 ## ✨ Features
 
-### Search markdown note
-<img width="33%" src="./images/features_previews/search-preview.gif" alt="Search markdown note feature preview"/>
+| Feature 1                                                                                                           | Feature 2                                                                                                                          |
+|---------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Search markdown note                                                                                                | Import markdown from file                                                                                                          |
+| <img width="200px" src="./images/features_previews/search-preview.gif" alt="Search markdown note feature preview"/> | <img width="200px" src="./images/features_previews/import-from-file-preview.gif" alt="Import markdown from file feature preview"/> |
 
-### Import markdown from file
-<img width="33%" src="./images/features_previews/import-from-file-preview.gif" alt="Search markdown note feature preview"/>
-
-### Import markdown from URL
-<img width="33%" src="./images/features_previews/import-from-url-preview.gif" alt="Search markdown note feature preview"/>
-
-### Markdown tips bar
-<img width="33%" src="./images/features_previews/writing-code-preview.gif" alt="Search markdown note feature preview"/>
+| Feature 3                                                                                                                        | Feature 4                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| Import markdown from URL                                                                                                         | Markdown tips bar                                                                                                      |
+| <img width="200px" src="./images/features_previews/import-from-url-preview.gif" alt="Import markdown from URL feature preview"/> | <img width="200px" src="./images/features_previews/writing-code-preview.gif" alt="Markdown tips bar feature preview"/> |
 
 ## 📄 License
 ```
